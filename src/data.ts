@@ -148,14 +148,13 @@ export const PRODUCTS: Product[] = [
         hasFlavors: false,
         variants: [
             {
-                label: "Cachepó com 1 ovo recheado com bombons de 150 gr., 1 coelhinho de chocolate e 10 bombons recheados",
-                price: 49.9,
+                label: "Cachepó com 1 ovo recheado com bombons de 150 gr., 1 coelhinho de chocolate e 4 bombons recheados",
+                price: 29.9,
             },
             {
                 label: "Cachepó com 2 ovos de 150 gr., 2 coelhinhos de chocolate e 6 bombons recheados",
-                price: 59.9,
+                price: 49.9,
             },
-            { label: "Cachepó com 3 ovos de 150 gr.", price: 44.9 },
         ],
         modalName: "Cachepó Especial",
     },
@@ -170,7 +169,7 @@ export const PRODUCTS: Product[] = [
         imagePosition: "bottom",
         hasFlavors: true,
         flavors: COMMON_FLAVORS,
-        variants: [{ label: "Padrão", price: 49.9 }],
+        variants: [{ label: "Padrão", price: 39.9 }],
     },
 ];
 
