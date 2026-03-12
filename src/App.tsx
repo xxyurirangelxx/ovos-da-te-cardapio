@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { ShoppingBag, Search, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence, useInView } from 'motion/react';
-import { CATEGORIES, PRODUCTS, GALLERY_IMAGES } from './data';
+import { CATEGORIES, PRODUCTS } from './data';
+import { GalleryCarousel } from './components/GalleryCarousel';
 import { Product, CartItem } from './types';
 import { ProductCard } from './components/ProductCard';
 import { ProductModal } from './components/ProductModal';
@@ -39,8 +40,8 @@ export default function App() {
 
   const filteredProducts = PRODUCTS.filter((product) => {
     const matchesCategory = activeCategory === 'all' || product.category === activeCategory;
-    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          product.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      product.description.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -61,7 +62,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-stone-50 font-sans selection:bg-amber-200 selection:text-amber-900">
       {/* Header */}
-      <motion.header 
+      <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
@@ -70,15 +71,15 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
-            <motion.div 
+            <motion.div
               className="flex items-center"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <img 
-                src="/logo.png" 
-                alt="Ovos da Tê" 
+              <img
+                src="/logo.png"
+                alt="Ovos da Tê"
                 className="h-20 w-auto object-contain scale-[1.6] origin-left ml-2"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
@@ -120,7 +121,7 @@ export default function App() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, delay: 0.5, type: "spring" }}
               >
-                <Button 
+                <Button
                   variant="ghost"
                   size="icon"
                   onClick={() => setIsCartOpen(true)}
@@ -143,9 +144,9 @@ export default function App() {
                   </AnimatePresence>
                 </Button>
               </motion.div>
-              
+
               {/* Mobile Menu Toggle */}
-              <Button 
+              <Button
                 variant="ghost"
                 size="icon"
                 className="md:hidden text-stone-600 hover:bg-stone-100 rounded-full h-10 w-10"
@@ -201,9 +202,9 @@ export default function App() {
         {/* Hero Section */}
         <section className="relative bg-amber-900 text-amber-50 py-20 overflow-hidden">
           <div className="absolute inset-0 opacity-20">
-            <img 
-              src="https://images.unsplash.com/photo-1514517521153-1be72277b32f?auto=format&fit=crop&q=80&w=2000" 
-              alt="Chocolate background" 
+            <img
+              src="https://images.unsplash.com/photo-1514517521153-1be72277b32f?auto=format&fit=crop&q=80&w=2000"
+              alt="Chocolate background"
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
             />
@@ -226,7 +227,7 @@ export default function App() {
             >
               Ovos de colher, tradicionais e trufados feitos com muito amor e ingredientes selecionados para deixar sua Páscoa mais doce.
             </motion.p>
-            <motion.a 
+            <motion.a
               href="#cardapio"
               initial={{ opacity: 0, y: 20, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -260,15 +261,15 @@ export default function App() {
                 <h2 className="text-3xl font-black text-stone-800 mb-2">Nosso Cardápio</h2>
                 <p className="text-stone-500">Escolha suas delícias favoritas</p>
               </div>
-              
+
               {/* Search with animation */}
-              <motion.div 
+              <motion.div
                 className="relative w-full md:w-72"
                 animate={{ width: isSearchFocused ? '100%' : undefined }}
                 transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                 style={{ maxWidth: isSearchFocused ? '24rem' : undefined }}
               >
-                <motion.div 
+                <motion.div
                   className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
                   animate={{ color: isSearchFocused ? 'var(--color-primary)' : undefined }}
                 >
@@ -301,11 +302,10 @@ export default function App() {
                     <Button
                       variant={activeCategory === category.id ? "default" : "outline"}
                       onClick={() => setActiveCategory(category.id)}
-                      className={`rounded-full px-6 py-5 font-bold text-sm transition-all relative overflow-hidden ${
-                        activeCategory === category.id
+                      className={`rounded-full px-6 py-5 font-bold text-sm transition-all relative overflow-hidden ${activeCategory === category.id
                           ? 'shadow-md shadow-primary/20 bg-primary text-primary-foreground hover:bg-primary/90'
                           : 'text-stone-600 border-stone-200 hover:bg-stone-100'
-                      }`}
+                        }`}
                     >
                       {activeCategory === category.id && (
                         <motion.div
@@ -340,15 +340,15 @@ export default function App() {
                     key={product.id}
                     initial={{ opacity: 0, y: 30, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ 
-                      duration: 0.4, 
+                    transition={{
+                      duration: 0.4,
                       delay: index * 0.06,
                       ease: [0.22, 1, 0.36, 1]
                     }}
                   >
-                    <ProductCard 
-                      product={product} 
-                      onClick={setSelectedProduct} 
+                    <ProductCard
+                      product={product}
+                      onClick={setSelectedProduct}
                     />
                   </motion.div>
                 ))}
@@ -370,7 +370,7 @@ export default function App() {
                   <Search className="h-12 w-12 text-stone-300 mx-auto mb-4" />
                 </motion.div>
                 <p className="text-stone-500 text-lg mb-4">Nenhum produto encontrado para sua busca.</p>
-                <Button 
+                <Button
                   variant="outline"
                   onClick={() => { setSearchQuery(''); setActiveCategory('all'); }}
                   className="text-primary border-primary/20 hover:bg-primary/10"
@@ -391,28 +391,10 @@ export default function App() {
                 <p className="text-stone-500 max-w-2xl mx-auto">Um pouco do nosso trabalho e da qualidade que entregamos em cada ovo de Páscoa.</p>
               </div>
             </FadeInWhenVisible>
-            
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {GALLERY_IMAGES.slice(0, 8).map((img, i) => (
-                <FadeInWhenVisible key={i} delay={i * 0.08}>
-                  <motion.div
-                    className="aspect-square rounded-2xl overflow-hidden bg-stone-100 group cursor-pointer"
-                    whileHover={{ scale: 1.03 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <img 
-                      src={img}
-                      alt={`Galeria ${i + 1}`}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      referrerPolicy="no-referrer"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = `https://picsum.photos/seed/choco${i}/400/400`;
-                      }}
-                    />
-                  </motion.div>
-                </FadeInWhenVisible>
-              ))}
-            </div>
+
+            <FadeInWhenVisible delay={0.15}>
+              <GalleryCarousel />
+            </FadeInWhenVisible>
           </div>
         </section>
       </main>
@@ -422,9 +404,9 @@ export default function App() {
         <footer className="bg-stone-900 text-stone-400 py-12 border-t border-stone-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="flex items-center justify-center mb-6">
-              <img 
-                src="/logo.png" 
-                alt="Ovos da Tê" 
+              <img
+                src="/logo.png"
+                alt="Ovos da Tê"
                 className="h-20 w-auto object-contain brightness-0 invert opacity-80"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
@@ -449,18 +431,18 @@ export default function App() {
 
       {/* Modals */}
       {selectedProduct && (
-        <ProductModal 
-          product={selectedProduct} 
-          onClose={() => setSelectedProduct(null)} 
-          onAddToCart={handleAddToCart} 
+        <ProductModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+          onAddToCart={handleAddToCart}
         />
       )}
 
       {isCartOpen && (
-        <CartModal 
-          items={cartItems} 
-          onClose={() => setIsCartOpen(false)} 
-          onRemoveItem={handleRemoveItem} 
+        <CartModal
+          items={cartItems}
+          onClose={() => setIsCartOpen(false)}
+          onRemoveItem={handleRemoveItem}
         />
       )}
     </div>
