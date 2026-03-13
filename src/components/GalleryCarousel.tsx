@@ -3,18 +3,14 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ChevronLeft, ChevronRight, ZoomIn, X } from 'lucide-react';
 import { Button } from './ui/button';
 
-// Importa automaticamente todas as imagens da pasta public/images/galeria/
-const galleryModules = import.meta.glob<string>(
-    '/public/images/galeria/*.{jpg,jpeg,png,webp,gif}',
-    { eager: true, query: '?url', import: 'default' }
+// Importa automaticamente todas as imagens da pasta src/assets/galeria/
+const galleryModules = import.meta.glob<{ default: string }>(
+    '../assets/galeria/*.{jpg,jpeg,png,webp,gif}',
+    { eager: true }
 );
 
 function getGalleryImages(): string[] {
-    return Object.entries(galleryModules).map(([path, url]) => {
-        if (typeof url === 'string') return url;
-        const publicPath = path.replace('/public', '');
-        return publicPath;
-    });
+    return Object.values(galleryModules).map((mod) => mod.default);
 }
 
 interface GalleryCarouselProps {
@@ -188,8 +184,8 @@ export function GalleryCarousel({ className = '' }: GalleryCarouselProps) {
                                 setCurrentIndex(imgIndex);
                             }}
                             className={`relative rounded-xl overflow-hidden shrink-0 transition-all duration-300 ${imgIndex === currentIndex
-                                    ? 'ring-2 ring-primary ring-offset-2 shadow-md scale-110'
-                                    : 'opacity-50 hover:opacity-80'
+                                ? 'ring-2 ring-primary ring-offset-2 shadow-md scale-110'
+                                : 'opacity-50 hover:opacity-80'
                                 }`}
                             style={{
                                 width: 64,
